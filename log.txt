@@ -82,3 +82,15 @@ Timestamp: Fri May 06 2022 01:35:10 GMT+0200 (Central European Summer Time)
 URL: /favicon.ico
 Timestamp: Fri May 06 2022 01:35:12 GMT+0200 (Central European Summer Time)
 
+URL: /
+Timestamp: Sun May 08 2022 15:14:13 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 08 2022 15:14:16 GMT+0200 (Central European Summer Time)
+
+URL: /documentation
+Timestamp: Sun May 08 2022 15:14:21 GMT+0200 (Central European Summer Time)
+
+URL: /favicon.ico
+Timestamp: Sun May 08 2022 15:14:22 GMT+0200 (Central European Summer Time)
+
