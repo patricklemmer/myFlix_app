@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
   res.send('Netflix sucks')
 });
 
-//Serving static files using express "static" function
-app.use('/documentation', express.static('public'));
+//Serving static files from "public" folder using express "static" function
+app.use(express.static('public'));
 
 //Server PORT
 app.listen(8080, () => {
