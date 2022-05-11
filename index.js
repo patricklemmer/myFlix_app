@@ -1,5 +1,7 @@
 //Requiring Express
-const express = require('express');
+const express = require('express'),
+  path = require('path');
+
 //Setting Express to var "app"
 const app = express();
 
@@ -15,7 +17,7 @@ app.get('/', (req, res) => {
 });
 
 //Serving static files from "public" folder using express "static" function
-app.use(express.static('public'));
+app.use(express.static('/public'));
 
 //Server PORT
 app.listen(8080, () => {
