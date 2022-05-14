@@ -12,12 +12,14 @@ const PORT = 8080;
 
 //Invokes express.static to serve static files from folder "/public"
 app.use(express.static(__dirname + '/public'));
+
 //Invokes morgan to log URL requests to console
 app.use(morgan('common'));
+
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
 
-//Creates JSON object for endpoint "/movies"
+//Arrays of objects for "movies" and "users"
 let movies = [
   {
     Title: 'Die Hard',
@@ -113,16 +115,136 @@ let movies = [
 
 let users = [
   { id: 1, name: 'Joe', favouriteMovies: [] },
-  { id: 2, name: 'Sophie', favouriteMovies: [] },
+  { id: 2, name: 'Sophie', favouriteMovies: ['Hotel Rwanda'] },
 ];
 
-//Get functions
-app.get('/movies', (req, res) => {
-  res.json(movies);
+//Endpoints and HTTP requests
+//In order of CRUD
+
+//CREATE
+//Allow new users to register
+app.post('/users', (req, res) => {
+  const newUser = req.body;
+
+  if (newUser.name) {
+    newUser.id = uuid.v4();
+    users.push(newUser);
+    res.status(201).json(newUser);
+  } else {
+    res.status(400).send('Please add a name.');
+  }
 });
 
-app.get('/', (req, res) => {
-  res.send('Netflix sucks');
+//CREATE
+//Allow users to add a movie to their list of favourites
+app.post('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find((user) => user.id == id);
+
+  if (user) {
+    user.favouriteMovies.push(movieTitle);
+    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
+
+//READ
+//Return a list of ALL movies to the user
+app.get('/movies', (req, res) => {
+  res.status(200).json(movies);
+});
+
+//READ
+//Return data about a single movie by title to the user
+app.get('/movies/:title', (req, res) => {
+  const { title } = req.params;
+  const movie = movies.find((movie) => movie.Title === title);
+
+  if (movie) {
+    res.status(200).json(movie);
+  } else {
+    res.status(400).send('Movie not found.');
+  }
+});
+
+//READ
+//Return data about a a genre by name/title
+app.get('/movies/genre/:genreName', (req, res) => {
+  const { genreName } = req.params;
+  const genre = movies.find((movie) => movie.Genre.Name === genreName).Genre;
+
+  if (genre) {
+    res.status(200).json(genre);
+  } else {
+    res.status(400).send('Genre not found.');
+  }
+});
+
+//READ
+//Return data about a a genre by name/title
+app.get('/movies/directors/:directorName', (req, res) => {
+  const { directorName } = req.params;
+  const director = movies.find(
+    (movie) => movie.Director.Name === directorName
+  ).Director;
+
+  if (director) {
+    res.status(200).json(director);
+  } else {
+    res.status(400).send('Director not found.');
+  }
+});
+
+//UPDATE
+//Allow users to update their user info
+app.put('/users/:id', (req, res) => {
+  const { id } = req.params;
+  const updatedUser = req.body;
+
+  let user = users.find((user) => user.id == id);
+
+  if (user) {
+    user.name = updatedUser.name;
+    res.status(200).json(user);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
+
+//DELETE
+//Allow users to remove a movie from their list of favourites
+app.delete('/users/:id/:movieTitle', (req, res) => {
+  const { id, movieTitle } = req.params;
+
+  let user = users.find((user) => user.id == id);
+
+  if (user) {
+    user.favouriteMovies = user.favouriteMovies.filter(
+      (title) => title !== movieTitle
+    );
+    res
+      .status(200)
+      .send(`${movieTitle} has been removed from user ${id}'s array`);
+  } else {
+    res.status(400).send('User not found');
+  }
+});
+
+//DELETE
+//Allow existing users to deregister
+app.delete('/users/:id', (req, res) => {
+  const { id } = req.params;
+
+  let user = users.find((user) => user.id == id);
+
+  if (user) {
+    users = users.filter((user) => user.id != id);
+    res.status(200).send(`User ${id} has been deleted`);
+  } else {
+    res.status(400).send('User not found');
+  }
 });
 
 //Error handling Middleware (needs to be at the end of code, before PORT listener)
