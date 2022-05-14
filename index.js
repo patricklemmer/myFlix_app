@@ -14,7 +14,18 @@ app.use(express.static(__dirname + '/public'));
 app.use(morgan('common'));
 
 //Creates JSON object for endpoint "/movies"
-let topMovies = [{ title: 'Narcos', director: '' }, { title: 'Narcos Mexico', director: '' }, { title: 'Breaking Bad', director: '' }, { title: 'Die Hard', director: '' }, { title: '', director: '' }, { title: '', director: '' }, { title: '', director: '' }, { title: '', director: '' }, { title: '', director: '' }, { title: '', director: '' }];
+let topMovies = [
+  { title: 'Narcos', director: '' },
+  { title: 'Narcos Mexico', director: '' },
+  { title: 'Breaking Bad', director: '' },
+  { title: 'Die Hard', director: '' },
+  { title: '', director: '' },
+  { title: '', director: '' },
+  { title: '', director: '' },
+  { title: '', director: '' },
+  { title: '', director: '' },
+  { title: '', director: '' },
+];
 
 //Get functions
 app.get('/movies', (req, res) => {
@@ -25,7 +36,7 @@ app.get('/', (req, res) => {
   res.send('Netflix sucks');
 });
 
-//Error handling Middleware
+//Error handling Middleware (needs to be at the end of code, before PORT listener)
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
