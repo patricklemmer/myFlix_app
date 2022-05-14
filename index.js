@@ -19,16 +19,46 @@ app.use(bodyParser.json());
 
 //Creates JSON object for endpoint "/movies"
 let movies = [
-  { title: 'Narcos', director: '' },
-  { title: 'Narcos Mexico', director: '' },
-  { title: 'Breaking Bad', director: '' },
-  { title: 'Die Hard', director: '' },
-  { title: '', director: '' },
-  { title: '', director: '' },
-  { title: '', director: '' },
-  { title: '', director: '' },
-  { title: '', director: '' },
-  { title: '', director: '' },
+  {
+    Title: 'Narcos',
+    Description: 'Text',
+    Genre: { Name: 'Text', Description: 'Text' },
+    Director: { Name: 'Text', Bio: 'Text', Birthdate: 2000 },
+    ImageURL: 'Link',
+    Featured: true,
+  },
+  {
+    Title: 'Narcos',
+    Description: 'Text',
+    Genre: { Name: 'Text', Description: 'Text' },
+    Director: { Name: 'Text', Bio: 'Text', Birthdate: 2000 },
+    ImageURL: 'Link',
+    Featured: true,
+  },
+  {
+    Title: 'Narcos',
+    Description: 'Text',
+    Genre: { Name: 'Text', Description: 'Text' },
+    Director: { Name: 'Text', Bio: 'Text', Birthdate: 2000 },
+    ImageURL: 'Link',
+    Featured: true,
+  },
+  {
+    Title: 'Narcos',
+    Description: 'Text',
+    Genre: { Name: 'Text', Description: 'Text' },
+    Director: { Name: 'Text', Bio: 'Text', Birthdate: 2000 },
+    ImageURL: 'Link',
+    Featured: true,
+  },
+  {
+    Title: 'Narcos',
+    Description: 'Text',
+    Genre: { Name: 'Text', Description: 'Text' },
+    Director: { Name: 'Text', Bio: 'Text', Birthdate: 2000 },
+    ImageURL: 'Link',
+    Featured: true,
+  },
 ];
 
 let users = [
