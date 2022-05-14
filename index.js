@@ -1,6 +1,8 @@
 //Requires "express" and "morgan"
 const express = require('express'),
-  morgan = require('morgan');
+  morgan = require('morgan'),
+  uuid = require('uuid'),
+  bodyParser = require('body-parser');
 
 //Assigns express() to var "app"
 const app = express();
@@ -12,9 +14,11 @@ const PORT = 8080;
 app.use(express.static(__dirname + '/public'));
 //Invokes morgan to log URL requests to console
 app.use(morgan('common'));
+//Invokes body-parser Middleware
+app.use(bodyParser.json());
 
 //Creates JSON object for endpoint "/movies"
-let topMovies = [
+let movies = [
   { title: 'Narcos', director: '' },
   { title: 'Narcos Mexico', director: '' },
   { title: 'Breaking Bad', director: '' },
@@ -27,9 +31,14 @@ let topMovies = [
   { title: '', director: '' },
 ];
 
+let users = [
+  { id: 1, name: 'Joe', favouriteMovies: [] },
+  { id: 2, name: 'Sophie', favouriteMovies: [] },
+];
+
 //Get functions
 app.get('/movies', (req, res) => {
-  res.json(topMovies);
+  res.json(movies);
 });
 
 app.get('/', (req, res) => {
