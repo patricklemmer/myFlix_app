@@ -183,7 +183,7 @@ app.get('/movies/genre/:genreName', (req, res) => {
 });
 
 //READ
-//Return data about a a genre by name/title
+//Return data about a director by name
 app.get('/movies/directors/:directorName', (req, res) => {
   const { directorName } = req.params;
   const director = movies.find(
