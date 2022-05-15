@@ -18,6 +18,7 @@
         <th class="table__th">Business Logic</th>
         <th class="table__th">URL</th>
         <th class="table__th">HTTP Method</th>
+        <th class="table__th">Query parameters</th>
         <th class="table__th">Request body data format</th>
         <th class="table__th">Response body data format</th>
       </tr>
@@ -26,65 +27,81 @@
         <td class="table__td">/movies</td>
         <td class="table__td">GET</td>
         <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">None</td>
+        <td class="table__td">A JSON object holding data about all the movies.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Returns data about a single movie by title to the user</td>
-        <td class="table__td"></td>
+        <td class="table__td">/movies/:title</td>
         <td class="table__td">GET</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">title</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A JSON object holding data about a single movie, containing a title, genre and director
+          information, a movie description, a movie image and the information whether the movie is featured or not.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Returns data about a genre by name/title</td>
-        <td class="table__td"></td>
+        <td class="table__td">/movies/genre/:genreName</td>
         <td class="table__td">GET</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">genreName</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A JSON object holding data about the genre and a genre description.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Returns data about a director by name</td>
-        <td class="table__td"></td>
+        <td class="table__td">/movies/directors/:directorName</td>
         <td class="table__td">GET</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">directorName</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A JSON object holding data about the director, the directors biography and the directors
+          year of birth.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows new users to register</td>
-        <td class="table__td"></td>
+        <td class="table__td">/users</td>
         <td class="table__td">POST</td>
         <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">A JSON object holding data about the new user to add, strctured like this: <img
+            class="table_td__img" src="/assets/img/add_new_user.png" alt="JSON syntax to add new users" height="60px"
+            weight="60px" /></td>
+        <td class="table__td">A JSON object with the new users information.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows users to update their user info</td>
-        <td class="table__td"></td>
+        <td class="table__td">/users/:id</td>
         <td class="table__td">PUT</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">id</td>
+        <td class="table__td">A JSON object holding data about the new user info, structured like this: <img
+            class="table_td__img" src="/assets/img/update_user.png" alt="JSON syntax to add new users" height="60px"
+            weight="60px" /></td>
+        <td class="table__td">A JSON object with the users updated information.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows users to add a movie to their list of favourites</td>
-        <td class="table__td"></td>
+        <td class="table__td">/users/:id/:movieTitle</td>
         <td class="table__td">POST</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">id, movieTitle</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A text message indicating, that a movie has been added to the users favourites.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows users to remove a movie from their list of favourites</td>
-        <td class="table__td"></td>
+        <td class="table__td">/users/:id/:movieTitle</td>
         <td class="table__td">DELETE</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">id, movieTitle</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A text message indicating, that a movie has been removed from the users favourites.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows existing users to deregister</td>
-        <td class="table__td"></td>
+        <td class="table__td">/users/:id</td>
         <td class="table__td">DELETE</td>
-        <td class="table__td"></td>
-        <td class="table__td"></td>
+        <td class="table__td">id</td>
+        <td class="table__td">None</td>
+        <td class="table__td">A text message indicating, that a user has been deleted.</td>
       </tr>
     </table>
+
 
 
   </body>
