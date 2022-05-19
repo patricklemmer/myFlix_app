@@ -1,8 +1,20 @@
-//Requires "express" and "morgan"
+//Requires "express", "morgan", "uuid", "bodyParser", "mongoose" and Mongoose models
 const express = require('express'),
   morgan = require('morgan'),
   uuid = require('uuid'),
-  bodyParser = require('body-parser');
+  bodyParser = require('body-parser'),
+  mongoose = require('mongoose'),
+  Models = require('./models.js');
+
+//Assigns model names from model.js
+const Movies = Models.Movie;
+const Users = Models.User;
+
+//Connects Mongoose to database
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Assigns express() to var "app"
 const app = express();
