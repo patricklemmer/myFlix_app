@@ -33,10 +33,11 @@ app.use(morgan('common'));
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
 
-//Endpoints and HTTP requests
-//In order of CRUD
+//Endpoints, CRUD and HTTP requests
+//-----Please read!-----
+//The CRUD functions below are sorted in the order of the acronym CRUD
 
-//CREATE (DONE)
+//CREATE
 
 //Allow new users to register
 
