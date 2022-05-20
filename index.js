@@ -305,7 +305,7 @@ app.use(bodyParser.json());
 
 //Allow new users to register
 
-// JSON format is epxpected
+// JSON format is expected
 // {
 //   ID: Integer,
 //   Username: String,
@@ -341,7 +341,7 @@ app.post('/users', (req, res) => {
     });
 });
 
-//CREATE
+//CREATE (DONE)
 
 //Allow users to add a movie to their list of favourites
 
@@ -362,19 +362,6 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
     }
   );
 });
-
-// app.post('/users/:id/:movieTitle', (req, res) => {
-//   const { id, movieTitle } = req.params;
-
-//   let user = users.find((user) => user.id == id);
-
-//   if (user) {
-//     user.favouriteMovies.push(movieTitle);
-//     res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
-//   } else {
-//     res.status(400).send('User not found');
-//   }
-// });
 
 //READ (DONE)
 
@@ -429,7 +416,7 @@ app.get('/movies/genres/:genreName', (req, res) => {
     });
 });
 
-//READ
+//READ (DONE)
 
 //Return data about a director by name
 
@@ -487,24 +474,26 @@ app.put('/users/:Username', (req, res) => {
   );
 });
 
-//DELETE
+//DELETE (DONE)
 
 //Allow users to remove a movie from their list of favourites
-app.delete('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params;
 
-  let user = users.find((user) => user.id == id);
-
-  if (user) {
-    user.favouriteMovies = user.favouriteMovies.filter(
-      (title) => title !== movieTitle
-    );
-    res
-      .status(200)
-      .send(`${movieTitle} has been removed from user ${id}'s array`);
-  } else {
-    res.status(400).send('User not found');
-  }
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $pull: { FavouriteMovies: req.params.MovieID },
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
 //DELETE (DONE)
