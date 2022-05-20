@@ -77,7 +77,7 @@ app.post('/users', (req, res) => {
     });
 });
 
-//CREATE (DONE)
+//CREATE
 
 //Allow users to add a movie to their list of favourites
 
@@ -99,7 +99,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
   );
 });
 
-//READ (DONE)
+//READ
 
 //Return a list of ALL movies to the user
 
@@ -114,7 +114,7 @@ app.get('/movies', (req, res) => {
     });
 });
 
-//READ (DONE)
+//READ
 
 //Return data about a single movie by title to the user
 
@@ -133,7 +133,7 @@ app.get('/movies/:title', (req, res) => {
     });
 });
 
-//READ (DONE)
+//READ
 
 //Return data about a genre by name
 
@@ -152,7 +152,7 @@ app.get('/movies/genres/:genreName', (req, res) => {
     });
 });
 
-//READ (DONE)
+//READ
 
 //Return data about a director by name
 
@@ -171,7 +171,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
     });
 });
 
-//UPDATE (DONE)
+//UPDATE
 
 //Allow users to update their user info
 
@@ -210,7 +210,7 @@ app.put('/users/:Username', (req, res) => {
   );
 });
 
-//DELETE (DONE)
+//DELETE
 
 //Allow users to remove a movie from their list of favourites
 
@@ -232,7 +232,7 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
   );
 });
 
-//DELETE (DONE)
+//DELETE
 
 //Allow existing users to deregister
 
