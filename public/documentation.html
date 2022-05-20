@@ -26,7 +26,7 @@
         <td class="table__td">Returns list of ALL movies to user</td>
         <td class="table__td">/movies</td>
         <td class="table__td">GET</td>
-        <td class="table__td"></td>
+        <td class="table__td">None</td>
         <td class="table__td">None</td>
         <td class="table__td">A JSON object holding data about all the movies.</td>
       </tr>
@@ -40,12 +40,12 @@
           information, a movie description, a movie image and the information whether the movie is featured or not.</td>
       </tr>
       <tr class="table__tr">
-        <td class="table__td">Returns data about a genre by name/title</td>
-        <td class="table__td">/movies/genre/:genreName</td>
+        <td class="table__td">Returns data about a genre by name</td>
+        <td class="table__td">/movies/genres/:genreName</td>
         <td class="table__td">GET</td>
         <td class="table__td">genreName</td>
         <td class="table__td">None</td>
-        <td class="table__td">A JSON object holding data about the genre and a genre description.</td>
+        <td class="table__td">A JSON object holding data about the genre name and a genre description.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Returns data about a director by name</td>
@@ -54,16 +54,17 @@
         <td class="table__td">directorName</td>
         <td class="table__td">None</td>
         <td class="table__td">A JSON object holding data about the director, the directors biography and the directors
-          year of birth.</td>
+          year of birth and date of death.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows new users to register</td>
         <td class="table__td">/users</td>
         <td class="table__td">POST</td>
-        <td class="table__td"></td>
-        <td class="table__td">A JSON object holding data about the new user to add, strctured like this: <img
-            class="table_td__img" src="/assets/img/add_new_user.png" alt="JSON syntax to add new users" height="60px"
-            weight="60px" /></td>
+        <td class="table__td">None</td>
+        <td class="table__td">A JSON object holding data about "username", "password", and "email", strctured like this:
+          <img class="table_td__img" src="/assets/img/add_new_user.png" alt="JSON syntax to add new users" height="60px"
+            weight="60px" />
+        </td>
         <td class="table__td">A JSON object with the new users information.</td>
       </tr>
       <tr class="table__tr">
@@ -78,25 +79,27 @@
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows users to add a movie to their list of favourites</td>
-        <td class="table__td">/users/:id/:movieTitle</td>
+        <td class="table__td">/users/:Username/movies/:MovieID</td>
         <td class="table__td">POST</td>
-        <td class="table__td">id, movieTitle</td>
+        <td class="table__td">Username, MovieID</td>
         <td class="table__td">None</td>
-        <td class="table__td">A text message indicating, that a movie has been added to the users favourites.</td>
+        <td class="table__td">A text message indicating, that a movie has been added to the users list of favourite
+          movies.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows users to remove a movie from their list of favourites</td>
-        <td class="table__td">/users/:id/:movieTitle</td>
+        <td class="table__td">/users/:Username/movies/:MovieID</td>
         <td class="table__td">DELETE</td>
-        <td class="table__td">id, movieTitle</td>
+        <td class="table__td">Username, MovieID</td>
         <td class="table__td">None</td>
-        <td class="table__td">A text message indicating, that a movie has been removed from the users favourites.</td>
+        <td class="table__td">A text message indicating, that a movie has been removed from the users list of favourite
+          movies.</td>
       </tr>
       <tr class="table__tr">
         <td class="table__td">Allows existing users to deregister</td>
         <td class="table__td">/users/:Username</td>
         <td class="table__td">DELETE</td>
-        <td class="table__td">id</td>
+        <td class="table__td">Username</td>
         <td class="table__td">None</td>
         <td class="table__td">A text message indicating, that a user has been deleted.</td>
       </tr>
