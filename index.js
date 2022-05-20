@@ -43,7 +43,7 @@ app.use(bodyParser.json());
 
 // JSON format is expected
 // {
-//   ID: Integer,
+//   ID: Integer (set and added automatically),
 //   Username: String,
 //   Password: String,
 //   Email: String,
