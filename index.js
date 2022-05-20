@@ -5,6 +5,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   Models = require('./models.js');
+const req = require('express/lib/request');
 const res = require('express/lib/response');
 
 //Assigns model names from model.js
@@ -300,7 +301,7 @@ app.use(bodyParser.json());
 //Endpoints and HTTP requests
 //In order of CRUD
 
-//CREATE
+//CREATE (DONE)
 
 //Allow new users to register
 
@@ -343,20 +344,39 @@ app.post('/users', (req, res) => {
 //CREATE
 
 //Allow users to add a movie to their list of favourites
-app.post('/users/:id/:movieTitle', (req, res) => {
-  const { id, movieTitle } = req.params;
 
-  let user = users.find((user) => user.id == id);
-
-  if (user) {
-    user.favouriteMovies.push(movieTitle);
-    res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
-  } else {
-    res.status(400).send('User not found');
-  }
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $push: { FavouriteMovies: req.params.MovieID },
+    },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
 });
 
-//READ
+// app.post('/users/:id/:movieTitle', (req, res) => {
+//   const { id, movieTitle } = req.params;
+
+//   let user = users.find((user) => user.id == id);
+
+//   if (user) {
+//     user.favouriteMovies.push(movieTitle);
+//     res.status(200).send(`${movieTitle} has been added to user ${id}'s array`);
+//   } else {
+//     res.status(400).send('User not found');
+//   }
+// });
+
+//READ (DONE)
 
 //Return a list of ALL movies to the user
 
@@ -390,27 +410,20 @@ app.get('/movies/:title', (req, res) => {
 
 //Return data about a genre by name
 
-// app.get('/movies/genre/:genreName', (req, res) => {
-//   Movies.findOne({ Genre: req.params.genreName })
-//     .then((genreName) => {
-//       res.json(genreName);
-//     })
-//     .catch((err) => {
-//       console.error(err);
-//       res.status(500).send('Error: ' + err);
-//     });
-// });
-
-// app.get('/movies/genre/:genreName', (req, res) => {
-//   const { genreName } = req.params;
-//   const genre = movies.find((movie) => movie.Genre.Name === genreName).Genre;
-
-//   if (genre) {
-//     res.status(200).json(genre);
-//   } else {
-//     res.status(400).send('Genre not found.');
-//   }
-// });
+app.get('/movies/genre/:genreName', (req, res) => {
+  Movies.findOne({ 'Genre.Name': req.params.genreName })
+    .then((genreName) => {
+      if (!genreName) {
+        res.status(404).send('Genre not found.');
+      } else {
+        res.json(genreName.Genre);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 //READ
 
@@ -428,7 +441,7 @@ app.get('/movies/directors/:directorName', (req, res) => {
   }
 });
 
-//UPDATE
+//UPDATE (DONE)
 
 //Allow users to update their user info
 
@@ -487,7 +500,7 @@ app.delete('/users/:id/:movieTitle', (req, res) => {
   }
 });
 
-//DELETE
+//DELETE (DONE)
 
 //Allow existing users to deregister
 
