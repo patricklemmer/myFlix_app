@@ -36,6 +36,10 @@ app.use(bodyParser.json());
 //Import of auth.js
 let auth = require('./auth')(app);
 
+//Requires Passport module and imports passport.js
+const passport = require('passport');
+require('./passport');
+
 //Endpoints, CRUD and HTTP requests
 //-----Please read!-----
 //The CRUD functions below are sorted in the order of the acronym CRUD
