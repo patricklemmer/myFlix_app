@@ -33,6 +33,9 @@ app.use(morgan('common'));
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
 
+//Import of auth.js
+let auth = require('./auth')(app);
+
 //Endpoints, CRUD and HTTP requests
 //-----Please read!-----
 //The CRUD functions below are sorted in the order of the acronym CRUD
