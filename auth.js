@@ -1,4 +1,4 @@
-const jwtSecret = 'your_jwt_secret';
+const jwtSecret = '9ca50c5489e2ca22a205344d0511090a';
 
 const jwt = require('jsonwebtoken'),
   passport = require('passport');
