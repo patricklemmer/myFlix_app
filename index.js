@@ -33,6 +33,9 @@ app.use(morgan('common'));
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
 
+const cors = require('cors');
+app.use(cors());
+
 //Import of auth.js
 let auth = require('./auth')(app);
 
