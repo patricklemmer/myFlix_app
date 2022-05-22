@@ -1,7 +1,5 @@
 const jwtSecret = 'your_jwt_secret';
 
-const req = require('express/lib/request');
-const res = require('express/lib/response');
 const jwt = require('jsonwebtoken'),
   passport = require('passport');
 
@@ -17,7 +15,7 @@ let generateJWTToken = (user) => {
   });
 };
 
-//POST login
+//POST request for endpoint /login
 module.exports = (router) => {
   router.post('/login', (req, res) => {
     passport.authenticate('local', { session: false }, (error, user, info) => {
