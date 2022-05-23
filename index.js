@@ -22,9 +22,6 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 //Assigns express() to var "app"
 const app = express();
 
-//Assigns PORT # to var "PORT"
-const PORT = 8080;
-
 //Invokes express.static to serve static files from folder "/public"
 app.use(express.static(__dirname + '/public'));
 
@@ -338,5 +335,8 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 
-//Listens to server PORT and logs msg to console
-app.listen(PORT, () => console.log('Server is running....'));
+//Assigns PORT to pre-configured port number in env var
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
+});
