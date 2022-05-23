@@ -13,8 +13,14 @@ const { check, validationResult } = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-//Connects Mongoose to database
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//Connects Mongoose to local database - code remains for testing purposes
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+//Connects Mongoose to remote database
+mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
