@@ -19,7 +19,7 @@ const Users = Models.User;
 //   useUnifiedTopology: true,
 // });
 
-//Connects Mongoose to remote database
+//Connects Mongoose to remote database - active connection method
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
