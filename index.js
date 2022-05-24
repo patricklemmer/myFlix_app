@@ -51,6 +51,10 @@ require('./passport');
 //-----Please read!-----
 //The CRUD functions below are sorted in the order of the acronym CRUD
 
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'success', data: { name: 'myFlix' } });
+});
+
 //CREATE
 
 //Allow new users to register
