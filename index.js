@@ -14,16 +14,16 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //Connects Mongoose to local database - code remains for testing purposes
-// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-//Connects Mongoose to remote database - active connection method
-mongoose.connect(process.env.CONNECTION_URI, {
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+//Connects Mongoose to remote database - active connection method
+// mongoose.connect(process.env.CONNECTION_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 
 //Assigns express() to var "app"
 const app = express();
