@@ -145,35 +145,22 @@ app.post(
 
 //READ
 
-//Return a list of ALL movies to the user (temp deactivated to remove auth middleware from this endpoint)
+//Return a list of ALL movies to the user
 
-// app.get(
-//   '/movies',
-//   passport.authenticate('jwt', { session: false }),
-//   (req, res) => {
-//     Movies.find()
-//       .then((movies) => {
-//         res.status(201).json(movies);
-//       })
-//       .catch((err) => {
-//         console.error(err);
-//         res.status(500).send('Error: ' + err);
-//       });
-//   }
-// );
-
-//Temp code (auth middleware removed for /movies)
-
-app.get('/movies', function (req, res) {
-  Movies.find()
-    .then(function (movies) {
-      res.status(201).json(movies);
-    })
-    .catch(function (error) {
-      console.error(error);
-      res.status(500).send('Error: ' + error);
-    });
-});
+app.get(
+  '/movies',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
 
 //READ
 
