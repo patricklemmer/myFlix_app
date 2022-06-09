@@ -14,16 +14,19 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 //Connects Mongoose to local database - code remains for testing purposes
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-
-// Connects Mongoose to remote database - active connection method
-// mongoose.connect(process.env.CONNECTION_URI, {
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
+
+// Connects Mongoose to remote database - active connection method
+mongoose.connect(
+  'mongodb+srv://patricklemmer:vBv3hbfob1zZ2WDn@meerkatstudio.eodnd.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 //Assigns express() to var "app"
 const app = express();
@@ -35,7 +38,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(morgan('common'));
 
 //Invokes body-parser Middleware
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
 app.use(cors());
