@@ -20,13 +20,10 @@ const Users = Models.User;
 // });
 
 // Connects Mongoose to remote database - active connection method
-mongoose.connect(
-  'mongodb+srv://patricklemmer:vBv3hbfob1zZ2WDn@meerkatstudio.eodnd.mongodb.net/myFlixDB?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose.connect(process.env.CONNECTION_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //Assigns express() to var "app"
 const app = express();
