@@ -56,9 +56,9 @@ require('./passport');
 //The CRUD functions below are sorted in the order of the acronym CRUD
 
 //Index route
-// app.get('/', (req, res) => {
-//   res.status(200).send('Welcome to myFlix');
-// });
+app.get('/', (req, res) => {
+  res.status(200).send('Welcome to myFlix');
+});
 
 //CREATE
 
