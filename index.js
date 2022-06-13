@@ -21,7 +21,8 @@ const Users = Models.User;
 
 // Connects Mongoose to remote database - active connection method
 mongoose.connect(
-  'mongodb+srv://patricklemmer:vBv3hbfob1zZ2WDn@meerkatstudio.eodnd.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+  process.env.CONNECTION_URI ||
+    'mongodb+srv://patricklemmer:vBv3hbfob1zZ2WDn@meerkatstudio.eodnd.mongodb.net/myFlixDB?retryWrites=true&w=majority',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
