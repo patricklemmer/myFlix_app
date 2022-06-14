@@ -40,7 +40,6 @@ app.use(morgan('common'));
 
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
 app.use(cors());
