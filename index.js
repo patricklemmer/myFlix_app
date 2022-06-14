@@ -39,8 +39,8 @@ app.use(express.static(__dirname + '/public'));
 app.use(morgan('common'));
 
 //Invokes body-parser Middleware
-// app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
 app.use(cors());
@@ -348,11 +348,11 @@ app.delete(
 //Error handling Middleware (needs to be at the end of code, before PORT listener)
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).send('Something broke!');
+  res.status(500).send('Something broke! ' + err.stack);
 });
 
 //Assigns PORT to pre-configured port number in env var
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8090;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);
 });
