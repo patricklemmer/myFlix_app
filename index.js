@@ -57,7 +57,10 @@ require('./passport');
 
 //Index route
 app.get('/', (req, res) => {
-  res.status(200).send('Welcome to myFlix');
+  res
+    .status(200)
+    .header('Access-Control-Allow-Origin', '*')
+    .send('Welcome to myFlix');
 });
 
 //CREATE
