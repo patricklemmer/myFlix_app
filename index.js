@@ -1,4 +1,4 @@
-//Requires "express", "morgan", "uuid", "bodyParser", "mongoose" and Mongoose models
+//Requires "express", "morgan", "uuid", "bodyParser", "mongoose" and models
 const express = require('express'),
   morgan = require('morgan'),
   uuid = require('uuid'),
@@ -13,12 +13,18 @@ const { check, validationResult } = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
 
+/**
+ * Databse connection; INACTIVE - can be activated for development
+ */
 //Connects Mongoose to local database - code remains for testing purposes
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
 // });
 
+/**
+ * Databse connection; ACTIVE - can be deactivated for development
+ */
 // Connects Mongoose to remote database - active connection method
 mongoose.connect(
   process.env.CONNECTION_URI ||
@@ -32,7 +38,9 @@ mongoose.connect(
 //Assigns express() to var "app"
 const app = express();
 
-//Invokes express.static to serve static files from folder "/public"
+/**
+ * Serves sstatic content for the app from the 'public' directory
+ */
 app.use(express.static(__dirname + '/public'));
 
 //Invokes morgan to log URL requests to console
@@ -41,6 +49,7 @@ app.use(morgan('common'));
 //Invokes body-parser Middleware
 app.use(bodyParser.json());
 
+// Setting CORS policy for all origins
 const cors = require('cors');
 app.use(cors());
 
@@ -55,24 +64,20 @@ require('./passport');
 //-----Please read!-----
 //The CRUD functions below are sorted in the order of the acronym CRUD
 
+/**
+ * GET: Index route
+ * @returns Welcome message
+ */
 //Index route
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to myFlix');
 });
 
-//CREATE
-
-//Allow new users to register
-
-// JSON format is expected
-// {
-//   ID: Integer (set and added automatically),
-//   Username: String,
-//   Password: String,
-//   Email: String,
-//   Birthday: Date
-//   }
-
+/**
+ * POST: Allows new users to register; Username, Password & Email are required fields!
+ * Request body: Bearer token, JSON with user information
+ * @returns user object
+ */
 app.post(
   '/users',
   //Validation logic
@@ -93,11 +98,16 @@ app.post(
       return res.status(422).json({ errors: errors.array() });
     }
 
+    // Creates hashed password from given password
     let hashedPassword = Users.hashPassword(req.body.Password);
+
+    // Creates new user
     Users.findOne({ Username: req.body.Username })
       .then((user) => {
+        // Throws error if username already exists
         if (user) {
           return res.status(400).send(req.body.Username + ' already exists.');
+          // If username doesn't exist, create new user with params from req body
         } else {
           Users.create({
             Username: req.body.Username,
@@ -121,26 +131,31 @@ app.post(
   }
 );
 
-//CREATE
-
-//Allow users to add a movie to their list of favourites
-
+/**
+ * POST: Allows users to add a movie to their list of favorites
+ * Request body: Bearer token
+ * @param username
+ * @param movieId
+ * @returns updated user object
+ * @requires passport
+ */
 app.post(
   '/users/:Username/movies/:MovieID',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    // Finds user by username
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
-        $push: { FavouriteMovies: req.params.MovieID },
+        $push: { FavouriteMovies: req.params.MovieID }, // Adds movie to the list
       },
-      { new: true },
+      { new: true }, // Returns updated document
       (err, updatedUser) => {
         if (err) {
           console.error(err);
           res.status(500).send('Error: ' + err);
         } else {
-          res.json(updatedUser);
+          res.json(updatedUser); // Returns JSON object of updatedUser
         }
       }
     );
@@ -166,10 +181,13 @@ app.get(
   }
 );
 
-//READ
-
-//Return data about a single movie by title to the user
-
+/**
+ * GET: Returns data (description, genre, director, imageURL, whether it’s featured or not) about a single movie by title to the user
+ * Request body: Bearer token
+ * @param title
+ * @returns movie object
+ * @requires passport
+ */
 app.get(
   '/movies/:title',
   passport.authenticate('jwt', { session: false }),
@@ -189,10 +207,13 @@ app.get(
   }
 );
 
-//READ
-
-//Return data about a genre by name
-
+/**
+ * GET: Returns data about a genre (description) by name/title (e.g., Action)
+ * Request body: Bearer token
+ * @param Name (Genre)
+ * @returns genre object
+ * @requires passport
+ */
 app.get(
   '/movies/genres/:genreName',
   passport.authenticate('jwt', { session: false }),
@@ -212,10 +233,13 @@ app.get(
   }
 );
 
-//READ
-
-//Return data about a director by name
-
+/**
+ * GET: Returns data about a director (bio, birth year, death year) by name
+ * Request body: Bearer token
+ * @param Name (Director)
+ * @returns director object
+ * @requires passport
+ */
 app.get(
   '/movies/directors/:directorName',
   passport.authenticate('jwt', { session: false }),
@@ -235,21 +259,44 @@ app.get(
   }
 );
 
-//UPDATE
+/**
+ * GET: Returns data on a single user (user object) by username
+ * Request body: Bearer token
+ * @param Username
+ * @returns user object
+ * @requires passport
+ */
+app.get(
+  '/users/:Username',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        if (user) {
+          // If a user with the corresponding username was found, return user info
+          res.status(200).json(user);
+        } else {
+          res
+            .status(400)
+            .send(
+              'User with the username ' + req.params.Username + ' was not found'
+            );
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  }
+);
 
-//Allow users to update their user info
-
-// JSON format is epxpected
-// {
-//   Username: String,
-//   (required)
-//   Password: String,
-//   (required)
-//   Email: String,
-//   (required)
-//   Birthday: Date
-// }
-
+/**
+ * PUT: Allow users to update their user info (find by username)
+ * Request body: Bearer token, updated user info
+ * @param Username
+ * @returns user object with updates
+ * @requires passport
+ */
 app.put(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
@@ -271,6 +318,7 @@ app.put(
       return res.status(422).json({ errors: errors.array() });
     }
 
+    // Finds user by username
     Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
@@ -288,17 +336,21 @@ app.put(
           console.error(err);
           res.status(500).send('Error: ' + err);
         } else {
-          res.json(updatedUser);
+          res.json(updatedUser); // Returns JSON object of updatedUser
         }
       }
     );
   }
 );
 
-//DELETE
-
-//Allow users to remove a movie from their list of favourites
-
+/**
+ * DELETE: Allows users to remove a movie from their list of favorites
+ * Request body: Bearer token
+ * @param Username
+ * @param movieId
+ * @returns user object
+ * @requires passport
+ */
 app.delete(
   '/users/:Username/movies/:MovieID',
   passport.authenticate('jwt', { session: false }),
@@ -321,16 +373,21 @@ app.delete(
   }
 );
 
-//DELETE
-
-//Allow existing users to deregister
-
+/**
+ * DELETE: Allows existing users to deregister
+ * Request body: Bearer token
+ * @param Username
+ * @returns success message
+ * @requires passport
+ */
 app.delete(
   '/users/:Username',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
+    // Finds user by username
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
+        // If user is found return success message, if not return error
         if (!user) {
           res.status(400).send(req.params.Username + ' was not found');
         } else {
@@ -344,13 +401,17 @@ app.delete(
   }
 );
 
-//Error handling Middleware (needs to be at the end of code, before PORT listener)
+/**
+ * Error handling; specifically at end of code BEFORE PORT definition
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke! ' + err.stack);
 });
 
-//Assigns PORT to pre-configured port number in env var
+/**
+ * PORT definition, assigns PORT to pre-configured number in env var
+ */
 const port = process.env.PORT || 8090;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);

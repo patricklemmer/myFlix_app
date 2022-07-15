@@ -57,6 +57,16 @@
           year of birth and date of death.</td>
       </tr>
       <tr class="table__tr">
+        <td class="table__td">Returns data about a single user</td>
+        <td class="table__td">/users/:Username</td>
+        <td class="table__td">GET</td>
+        <td class="table__td">Username</td>
+        <td class="table__td">A JSON object holding data about the user, structured like this: <img
+            class="table_td__img" src="../../assets/img/update_user.png" alt="JSON syntax of user object" height="60px"
+            weight="60px" /></td>
+        <td class="table__td">A JSON object with the users information.</td>
+      </tr>
+      <tr class="table__tr">
         <td class="table__td">Allows new users to login</td>
         <td class="table__td">/login</td>
         <td class="table__td">POST</td>
@@ -70,7 +80,7 @@
         <td class="table__td">POST</td>
         <td class="table__td">None</td>
         <td class="table__td">A JSON object holding data about "username", "password", and "email", strctured like this:
-          <img class="table_td__img" src="./assets/img/add_new_user.png" alt="JSON syntax to add new users"
+          <img class="table_td__img" src="../../assets/img/add_new_user.png" alt="JSON syntax to add new users"
             height="60px" weight="60px" />
         </td>
         <td class="table__td">A JSON object with the new users information.</td>
