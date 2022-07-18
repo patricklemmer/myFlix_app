@@ -196,9 +196,9 @@ app.get(
       .then((user) => {
         if (user) {
           // If a user with the corresponding username was found, return user info
-          res.status(200).json(user.FavoriteMovies);
+          res.status(200).json(user.FavouriteMovies);
         } else {
-          res.status(400).send('Could not find favorite movies for this user');
+          res.status(400).send('Could not find favourite movies for this user');
         }
       })
       .catch((err) => {
