@@ -162,10 +162,12 @@ app.post(
   }
 );
 
-//READ
-
-//Return a list of ALL movies to the user
-
+/**
+ * GET: Returns a list of ALL movies to the user
+ * Request body: Bearer token
+ * @returns array of movie objects
+ * @requires passport
+ */
 app.get(
   '/movies',
   passport.authenticate('jwt', { session: false }),
